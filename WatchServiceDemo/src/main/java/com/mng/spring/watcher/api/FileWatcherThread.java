@@ -35,8 +35,7 @@ public class FileWatcherThread implements Runnable {
 	
 	@Autowired
 	private ProcessData processData;
-
-		
+	
 	@PostConstruct
 	public void setUpDirectory() {	
 		processData.setFilterDataTemps("N");
