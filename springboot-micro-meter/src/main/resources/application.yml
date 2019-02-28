@@ -1,0 +1,6 @@
+management:
+  endpoints:
+    web:      exposure:        include: '*'
+  endpoint:    health:      show-details: always
+server:  port: 9595
+spring:  application:    name: springboot-micro-meter
