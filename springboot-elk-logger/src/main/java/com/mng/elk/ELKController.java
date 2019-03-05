@@ -52,4 +52,13 @@ class ELKController {
 		return response;
 	}
 	
+	@RequestMapping(value = "/count")
+	public void continueLoogerStatementsDisply() {
+		int count = 1;
+		while(true) {
+			LOG.log(Level.INFO, "count value is incremete: "+count);
+			count++;
+		}
+	}
+	
 }
