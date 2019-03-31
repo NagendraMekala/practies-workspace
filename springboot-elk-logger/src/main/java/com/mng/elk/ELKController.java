@@ -38,8 +38,7 @@ class ELKController {
 		try {
 			throw new Exception("Opps Exception raised....");
 		} catch (Exception e) {
-			e.printStackTrace();
-			LOG.error(e);
+			LOG.error("Exception -", e);
 
 			StringWriter sw = new StringWriter();
 			PrintWriter pw = new PrintWriter(sw);
