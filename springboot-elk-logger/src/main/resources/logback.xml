@@ -1,66 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
 
-	<property name="DEV_HOME" value="logs" />
+	<property scope="context" name="logger.type" value="customerservice" />
+	<include resource="org/springframework/boot/logging/logback/defaults.xml" />
 
-	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-		<layout class="ch.qos.logback.classic.PatternLayout">
-			<Pattern>
-				%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n
-			</Pattern>
-		</layout>
-	</appender>
+	<jmxConfigurator />
 
-	<appender name="FILE-AUDIT"
-		class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>${DEV_HOME}/debug.log</file>
-		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-			<Pattern>
-				%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n
-			</Pattern>
+	<appender name="accountservice"	class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>C:/var/log/td-agent/customer-service.log</file>
+		<encoder>
+		  <Pattern>%d{yyyy-MM-dd} ${logger.type} %p %m%n</Pattern>
 		</encoder>
 
-		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+		<rollingPolicy	class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+			<maxIndex>10</maxIndex>
 			<!-- rollover daily -->
-			<fileNamePattern>${DEV_HOME}/archived/debug.%d{yyyy-MM-dd}.%i.log
-                        </fileNamePattern>
-			<timeBasedFileNamingAndTriggeringPolicy
-				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-				<maxFileSize>10MB</maxFileSize>
-			</timeBasedFileNamingAndTriggeringPolicy>
+			<fileNamePattern>C:/var/log/td-agent/customer-service.log%i.log</fileNamePattern>
 		</rollingPolicy>
-
+		<triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+			<maxFileSize>5MB</maxFileSize>
+		</triggeringPolicy>
 	</appender>
 
-	<appender name="FILE-ERROR"
-		class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>${DEV_HOME}/error.log</file>
-		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-			<Pattern>
-				%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n
-			</Pattern>
+	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+		  <Pattern>%d{yyyy-MM-dd} ${logger.type} %p %m%n</Pattern>
 		</encoder>
-
-		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<!-- rollover daily -->
-			<fileNamePattern>${DEV_HOME}/archived/error.%d{yyyy-MM-dd}.%i.log
-                        </fileNamePattern>
-			<timeBasedFileNamingAndTriggeringPolicy
-				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-				<maxFileSize>10MB</maxFileSize>
-			</timeBasedFileNamingAndTriggeringPolicy>
-		</rollingPolicy>
-
 	</appender>
 
-	<!-- Send logs to both console and file audit -->
-	<logger name="com.infotech.app" level="debug" additivity="false">
-		<appender-ref ref="FILE-AUDIT" />
-		<appender-ref ref="STDOUT" />
-	</logger>
-
-	<root level="error">
-		<appender-ref ref="FILE-ERROR" />
+	<root level="info">
+		<appender-ref ref="accountservice" />
+		<appender-ref ref="CONSOLE" />
 	</root>
-
 </configuration>
